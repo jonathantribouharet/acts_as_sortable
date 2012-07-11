@@ -3,15 +3,18 @@ module ActiveRecord::Acts::ActsAsSortable
   
 	def self.included(klass)
 		klass.class_eval do
+			class_attribute :acts_as_sortable_scope
 			extend(ClassMethods)
 		end
 	end
 	
 	module ClassMethods
 	
-		def acts_as_sortable
+		def acts_as_sortable(&block)
 		
 			include ActiveRecord::Acts::ActsAsSortable::InstanceMethods
+			
+			yield self if block_given?
 			
 			attr_protected :position
 			self.default_scope order('"' + self.table_name + '"."position" ASC')
@@ -33,7 +36,11 @@ module ActiveRecord::Acts::ActsAsSortable
 				
 		def position_up!
 			ActiveRecord::Base.transaction do
-				next_element = self.class.where(['position < ?', self.position]).last
+				
+				scope = self.class.where(['position < ?', self.position])
+				scope = scope.where(acts_as_sortable_scope => self.send('acts_as_sortable_scope')) if self.class.acts_as_sortable_scope
+				next_element = scope.last
+				
 				if next_element
 					temp_position = next_element.position
 					next_element.position = self.position
@@ -46,7 +53,11 @@ module ActiveRecord::Acts::ActsAsSortable
 				
 		def position_down!			
 			ActiveRecord::Base.transaction do
-				prev_element = self.class.where(['position > ?', self.position]).first
+				
+				scope = self.class.where(['position > ?', self.position])
+				scope = scope.where(acts_as_sortable_scope => self.send('acts_as_sortable_scope')) if self.class.acts_as_sortable_scope
+				prev_element = scope.first
+				
 				if prev_element
 					temp_position = prev_element.position
 					prev_element.position = self.position

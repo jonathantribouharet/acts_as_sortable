@@ -25,11 +25,21 @@ In your migrations:
 	end
 	
 
-Configuration in your model:
+Minimal configuration in your model:
 	
 	class User < ActiveRecord::Base
 		acts_as_sortable
 	end
+
+Custom configuration in your model:
+	
+	class User < ActiveRecord::Base
+		acts_as_sortable do |config|
+			config.acts_as_sortable_scope = :category_id
+		end
+	end
+
+* `acts_as_sortable_scope` is the scope for sort, by default it's nil.
 
 Each instance have two methods :
 	
