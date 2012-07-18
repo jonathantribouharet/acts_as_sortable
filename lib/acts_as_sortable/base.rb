@@ -37,7 +37,7 @@ module ActiveRecord::Acts::ActsAsSortable
 		def position_up!
 			ActiveRecord::Base.transaction do
 				scope = self.class.where(['position < ?', self.position])
-				scope = self.class.where(self.class.acts_as_sortable_scope => self.send(self.class.acts_as_sortable_scope)) if self.class.acts_as_sortable_scope
+				scope = scope.where(self.class.acts_as_sortable_scope => self.send(self.class.acts_as_sortable_scope)) if self.class.acts_as_sortable_scope
 				next_element = scope.last
 				
 				if next_element
