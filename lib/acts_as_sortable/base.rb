@@ -57,7 +57,7 @@ module ActiveRecord::Acts::ActsAsSortable
 				scope = scope.where(self.class.acts_as_sortable_scope => self.send(self.class.acts_as_sortable_scope)) if self.class.acts_as_sortable_scope
 				prev_element = scope.first
 				
-				if prev_element self != next_element
+				if prev_element
 					temp_position = prev_element.position
 					prev_element.position = self.position
 					prev_element.save!(:validates => false)
