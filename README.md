@@ -8,7 +8,7 @@ Installation
 
 Include the gem in your Gemfile:
 
-    gem 'acts_as_sortable', :git => 'https://github.com/eviljojo22/acts_as_sortable'
+    gem 'acts_as_sortable', :git => 'https://github.com/jonathantribouharet/acts_as_sortable'
 
 
 Usage

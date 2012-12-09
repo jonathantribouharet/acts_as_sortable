@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
 	s.name = "acts_as_sortable"
 	s.platform = Gem::Platform::RUBY
 	s.summary = "A plugin to sort ActiveRecord model."
-	s.homepage = "https://github.com/eviljojo22/acts_as_sortable"
+	s.homepage = "https://github.com/jonathantribouharet/acts_as_sortable"
 	s.require_paths = ["lib"]
 	s.version = "1.0"
 	s.author = "Jonathan TRIBOUHARET"
